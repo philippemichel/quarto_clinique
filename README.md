@@ -23,7 +23,7 @@ Deux dossiers sont créés dont le nom suffit à leur description :
 
 ## Fichiers
 
-**_quarto.xml** est le fichier de configuration de Quarto utilisé pour toutes les pages. Il comporte aussi les info de mise en page $\LaTeX$ (police, glossaire, couleur etc.). Vu que ce fichier est sensé me servir en priorité le logo & le code couleur sont ceux de mon hôpital mais c’est facile à modifier. 
+**\_quarto.xml** est le fichier de configuration de Quarto utilisé pour toutes les pages. Il comporte aussi les info de mise en page $\LaTeX$ (police, glossaire, couleur etc.). Vu que ce fichier est sensé me servir en priorité le logo & le code couleur sont ceux de mon hôpital mais c’est facile à modifier. 
 
 **base.qmd** Un fichier Quarto quasi vide pour commencer un nouveau document qui me sert principalement pour des essais. 
 
