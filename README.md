@@ -39,3 +39,6 @@ Deux dossiers sont créés dont le nom suffit à leur description :
 **rapport_pdf.qmd** Un squelette pour un rapport d'analyse statistique d'une étude clinique simple.
 
 **stat.bib** La bibliographie (format Bib$\LaTeX$)
+
+**fragments.qmd** Un fichier pour y mettre des bouts de code ou de texte qu'on veut réutiliser. La plupart sont aussi dans mes snippets.
+
