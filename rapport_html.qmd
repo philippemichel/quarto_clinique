@@ -1,5 +1,6 @@
 ---
 subtitle: "Rapport Statistique - V 1.0"
+cache: false
 ---
 
 ::: panel-tabset
@@ -81,7 +82,27 @@ L'échantillon comporte `r nrow(tt)` cas dont `r zz$n[1]` dans le groupe `avant`
 #| fig-cap: Données manquantes
 #| fig-asp: 0.8
 
-vis_dat(tt)
+gg <- vis_dat(tt)
+ggplotly(gg)
+```
+
+## Tableau descriptif
+
+```{r}
+#| label: tbl-desc
+#| tbl-cap: Description de la population
+
+tt |> 
+  tbl_summary(
+    by = escarre, 
+    missing = "no"
+  )  |> 
+  add_p() |>
+  add_n() |>
+  bold_labels() |>
+  kbl() |> 
+  kable_minimal()
+#   kable_material(c("striped", "hover"))
 ```
 
 # Objectif principal

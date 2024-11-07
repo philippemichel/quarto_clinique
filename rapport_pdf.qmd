@@ -1,9 +1,9 @@
 ---
-title: "CHROM-PAIN"
+title: "Test patients"
 subtitle: "Rapport statistique V 1.0"
 lang: fr
 language:
-  title-block-author-single: "Auteur"
+  title-block-author-single: "Statisticien"
 author:
   - name: "D<up>r</up> Philippe MICHEL"
     affiliations:
@@ -33,7 +33,7 @@ license: "MIT"
 rm(list = ls())
 classeur <- "chrompain1.xlsx"
 expx <- TRUE
-if (expx){system(paste0("rm -f ",classeur))}
+if (expx) {system(paste0("rm -f ",classeur))}
 
 library(corrplot)
 library(baseph)
@@ -53,7 +53,7 @@ theme_gtsummary_language(language = "fr", decimal.mark = ",")
 theme_gtsummary_journal(journal = "jama")
 options(OutDec = ",")
 #
-tt <- readRDS("datas/chrompain.RDS")
+tt <- patients
 ```
 
 # Généralités
@@ -64,250 +64,6 @@ Vu le très faible nombre de cas aucun test ne sera réalisé.
 
 Pour les variables en `Oui/Non` le nombre & pourcentage présent dans les tableaux correspond aux `Oui`.
 
-```{r}
-#| label: expp
-
- hexptabph <-
-  function(dfk,
-           exp = FALSE,
-           nomfich = "export",
-           nomsheet = "x",
-           lg = FALSE) {
-    zz <- dfk |>
-      as_kable_extra(longtable = lg, booktabs = TRUE) |>
-      kable_styling(latex_options = c("HOLD_position", "repeat_header")) |>       scroll_box(width = "100%", height = "720px")
-    if (exp) {
-      dfk |>
-        as_tibble() |>
-        write.xlsx(nomfich, sheetName = nomsheet, append = TRUE)
-    }
-    return(zz)
-  }
-```
-
-
-```{r}
-#| label: missing
-#| fig-cap: "Données manquantes"
-#| fig-height: 30
-
-plot_missing(tt,title = "% de données manquantes")
-```
-
-```{r}
-#| label: miss
-
-zz <- miss_var_summary(tt) |> 
-  dplyr::filter(pct_miss > 40)
-aa <- zz$variable
-tt <- tt |> 
-  dplyr::select(-all_of(aa)) |> 
-   dplyr::select(! starts_with("date")) 
-```
-
-
-
-On supprime toutes les variables ayant plus de 40 % de données manquantes. Il reste `r ncol(tt)-1` variables.
-
-# Tabeaux descriptifs
-
-## Patients
-
-```{r}
-#| label: tbl-pat
-#| tbl-cap: Patients
-aa <- str_detect(zz <-  names(tt), "ano")
-ouinon <- names(tt)[aa]
-
-ouinon <- c(ouinon, "rad", "dan", "imf", "dysmorphie", "amimique", "convulsions_j", "hypotonie", "hypertonie", "autonomie_respi", "autonomie_respi", "autonomie_alim","allaitement")
-
-tt |> 
-  dplyr::select(3:31) |>
-  tbl_summary(missing = "no" ,
-                value = list(ouinon ~ c("Oui"))
-)|> 
-  modify_header(label ~ " ") |> 
-  bold_labels() |> 
- add_n() |> 
- hexptabph(exp = expx, nomfich = classeur, nomsheet = "patients", lg = TRUE)
-
-```
-
-## Gestes
-
-```{r}
-#| label: tbl-gestes
-#| tbl-cap: Gestes
-
-ouinon <- c("rea_salle", "surfactant", "ventilation", "irm" , "chirurgie",  "pansements")
-
-tt |> 
-  dplyr::select(60:76) |>
-  tbl_summary(missing = "no", 
-                 value = list(ouinon ~ c("Oui"))
-) |> 
-   modify_header(label ~ " ") |> 
-  bold_labels() |> 
-  add_n() |> 
-  hexptabph(exp = expx, nomfich = classeur, nomsheet = "gestes", lg = TRUE)
-```
-
-## Analgésie
-
-```{r}
-#| label: tbl-analg
-#| tbl-cap: Analgésie
-
-ouinon <- c("modi_ftt_echell", "modif_lata" ,"morphine", "desir_all", "pleure_geint", "grimaces", "tortille", "apnees","amorphe" ,"manifestation" )
-
-tt |> 
-  dplyr::select(40:59) |>
-  tbl_summary(missing = "no", 
-                 value = list(ouinon ~ c("Oui"))
-) |> 
-   modify_header(label ~ " ") |> 
-  bold_labels() |> 
-  add_n() |> 
-  hexptabph(exp = expx, nomfich = classeur, nomsheet = "analgesie", lg = TRUE)
-```
-
-
-## Décès
-
-```{r}
-#| label: tbl-deces
-#| tbl-cap: Décès
-
-ouinon <- c( "reunion_ethique", "parents_dc")
-
-tt |> 
-  dplyr::select(77:78) |>
-  tbl_summary(missing = "no" ,
-              value = list(ouinon ~ c("oui"))) |> 
-   modify_header(label ~ " ") |> 
-  bold_labels() |> 
-  add_n() |> 
-  pexptabph(exp = expx, nomfich = classeur, nomsheet = "deces", lg = TRUE)
-```
-
-# Critère principal
-
-*Nombre d’évaluations quotidiennes de la douleur et de l’inconfort chez les
-nouveaux nés porteurs de syndromes poly-malformatifs sévères dans le cadre
-d’anomalies chromosomiques ou génétiques au cours de leur séjour. Ce critère sera évalué grâce aux différents types d’échelles de douleur réalisées et notées dans les dossiers médicaux des patients.*
-
-:::{.callout-warning}
-Les variables `echelle tube` & `echelle aigüe` sont inutilisables : six données manquantes pour la première & dix pour la seconde. 
-:::
-
-
-## Mesures au repos
-```{r}
-#| label: tbl-echrp
-#| tbl-cap: "Nb d'évaluations de la douleur - mesures au repos"
-
-tt |> 
-  mutate(echelle_repos = as.factor(cut(echelle_repos,
-                           breaks = c(-1,0,5,30), 
-                           labels = c("0", "1-5", "> 5")))) |> 
-  dplyr::select(echelle_repos) |>
-  tbl_summary(missing = "no") |> 
-     modify_header(label ~ " ") |> 
-  bold_labels() |> 
-  add_n() |> 
-  hexptabph(exp = expx, nomfich = classeur, nomsheet = "echelle_repos", lg = FALSE)
-  
-```
-
-## Toutes échelles
-
-
-```{r}
-#| label: tbl-crittous
-#| tbl-cap: "Nb d'évaluations de la douleur - tous patients"
-
-ech <- tt |> 
-  dplyr::select(starts_with("echelle_j_j")) |>
-  rowwise() |>
-  mutate(echellestot = sum(c_across(everything()), na.rm = TRUE)) |> 
-  mutate(echellestot = cut(echellestot,
-                           breaks = c(-1,0,10,20,30,35), 
-                           labels = c("0", "1-10", "11-20", "21-30", ">30")
-  )) |> 
-  mutate_at(vars(contains("echelle_j_j")), function(x) 
-   cut(x, breaks = c(-1,0,10,20,30), 
-          labels = c("0", "1-10", "11-20", ">20"))) |> 
-  dplyr::select(contains("echelle_j_j")) |>
-  pivot_longer(cols = contains("echelle_j_j"), 
-               names_to = "Période", 
-               values_to = "nb de mesures") |>
-  drop_na('nb de mesures') |> 
-## Recodage de zz$Période
-mutate(Période =
-  fct_recode(Période,
-    "J0 - J3" = "echelle_j_j0_3",
-    "J4 - J7" = "echelle_j_j4_7",
-    "J8 - J14" = "echelle_j_j8_j14"
-  ))
-#
-ech |> 
-  tbl_cross('Période', 'nb de mesures') |> 
-  bold_labels() |>
-  hexptabph(exp = expx, nomfich = classeur, nomsheet = "echelle_jours", lg = FALSE)
-```
-
-```{r}
-#| label: fig-crit1tous
-#| fig-cap: "Nb d'évaluations de la douleur - tous patients"
-#| fig-asp: 1
-ech |> 
-    ggplot() +
-  aes(x = `nb de mesures`, fill = `nb de mesures`) +
-      geom_bar(stat = "count") +
-  facet_wrap(vars(Période), nrow =3) +
-  scale_fill_discrete_sequential(palette = "Red-Blue") +
-         labs(
-                title = "Nb d'évaluations de la douleur - tous patients",
-                subtitle = "",
-                x = "Mesures/jour",
-                y = "n",
-                caption = "Nombre d'évaluations quotidiennes de la douleur par période - tous patients"
-        ) +
-        theme_light() +
-        theme(
-                plot.title = element_text(size = 18, face = "bold"),
-                plot.subtitle = element_text(size = 12),
-                axis.title.y = element_text(
-                        size = 12,
-                        angle = 90,
-                        vjust = .5
-                ),
-                axis.title.x = element_text(size = 12),
-                axis.text.x = element_text(size = 12),
-                axis.text.y = element_text(size = 12),
-                legend.position = "none"
-        )
-
-```
-
-## Patients sous VM
-
-```{r}
-#| label: tbl-echvm
-#| tbl-cap: "Nb d'évaluations de la douleur - patients sous VM"
-
-tt |> 
-  mutate(echelle_j_vm = as.factor(cut(echelle_j_vm,
-                           breaks = c(-1,0,5,10,30), 
-                           labels = c("0", "1-5", "6-10", ">10")))) |> 
-  dplyr::select(echelle_j_vm) |>
-  tbl_summary(missing = "no") |> 
-     modify_header(label ~ " ") |> 
-  bold_labels() |> 
-  add_n() |> 
-  hexptabph(exp = expx, nomfich = classeur, nomsheet = "echelle_vm", lg = FALSE)
-  
-```
 
 
 ```{r}
@@ -315,39 +71,10 @@ tt |>
 #| fig-cap: "Nb d'évaluations de la douleur - patients sous VM"
 
 tt |> 
-  mutate(echelle_j_vm = cut(echelle_j_vm,
-                           breaks = c(-1,0,5,10,30), 
-                           labels = c("0", "1-5", "6-10", ">10"))) |> 
-  drop_na(echelle_j_vm) |>
-  count(echelle_j_vm) |> 
   ggplot() +
-  aes(x = echelle_j_vm, y=n , fill = echelle_j_vm) +
-  geom_col() +
-    scale_fill_discrete_sequential(palette = "Red-Blue") +
-         labs(
-                title = "Nb d'évaluations de la douleur - patients sous VM",
-                subtitle = "",
-                x = "Mesures/jour",
-                y = "n",
-                caption = "Nombre d'évaluations quotidiennes de la douleur par période - patients sous ventilation mécanique (séjour complet)"
-        ) +
-        theme_light() +
-        theme(
-                plot.title = element_text(size = 18, face = "bold"),
-                plot.subtitle = element_text(size = 12),
-                axis.title.y = element_text(
-                        size = 12,
-                        angle = 90,
-                        vjust = .5
-                ),
-                axis.title.x = element_text(size = 12),
-                axis.text.x = element_text(size = 12),
-                axis.text.y = element_text(size = 12),
-                legend.position = "none"
-        )
+  aes(x = igs2, fill = admission) +
+  geom_histogram(binwidth = 10) 
 
-  
-  
 
 
 ```
