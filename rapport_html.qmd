@@ -1,0 +1,132 @@
+---
+subtitle: "Rapport Statistique - V 1.0"
+---
+
+::: panel-tabset
+
+# Introduction
+
+```{r}
+#| label: setup
+
+rm(list = ls())
+#
+library(baseph)
+library(janitor)
+library(tidyverse)
+library(gtsummary)
+library(kableExtra)
+library(lubridate)
+library(kableExtra)
+library(forestmodel)
+library(labelled)
+library(epiDisplay)
+library(visdat)
+library(GGally)
+library(ggridges)
+library(colorspace)
+library(xlsx)
+library(apyramid)
+library(plotly)
+#
+theme_gtsummary_language(language = "fr", decimal.mark = ",")
+options(OutDec = ",")
+#
+#load("datas/xxx.RData")
+tt <- patients # Pour l'exemple
+expx <- FALSE
+classeur <- "xxx.xls"
+if (expx){system(paste0("rm -f ",classeur))}
+#
+cat <- list(all_continuous() ~ "wilcox.test", all_categorical() ~ "chisq.test")
+affl <- list(all_categorical()~"{n}/{N} ({p})")
+```
+
+**Étude observationelle rétrospective sur dossiers (RNIPH)**
+
+| | |
+|:-|:---|
+| **Responsable scientifique**| D<sup>r</sup> Jean DUPONT <br> Pneumologie et maladies pulmonaires diverse et variées - Hôpital NOVO site de Pontoise | 
+| | |
+| **Investigateur principal** | M<sup>me</sup> Jeanne DURAND <br> Pneumologie - Hôpital NOVO site de Pontoise |
+| | |
+| **Chef de projet**| M<sup>me</sup> Marie MARTIN <br> USRC - Hôpital NOVO| 
+| | |
+| **Data-manager**| M. Pierre LEBLANC <br> USRC - Hôpital NOVO|  
+| | |
+| **Statisticien**| D<sup>r</sup> Philippe MICHEL <br> USRC - Hôpital NOVO| 
+
+: {.striped .responsive-sm .primary}
+
+
+**Début de l'étude** : 01/01/2021
+
+# Description de la population
+
+```{r}
+#| label: nb-cas
+
+ncas <- nrow(tt)
+zz <- tt |> 
+  group_by(escarre) |> 
+  count()
+```
+
+L'échantillon comporte `r nrow(tt)` cas dont `r zz$n[1]` dans le groupe `avant` et `r zz$n[2]` dans le groupe `après`.
+
+## Données manquantes
+
+```{r}
+#| label: fig-manq
+#| fig-cap: Données manquantes
+#| fig-asp: 0.8
+
+vis_dat(tt)
+```
+
+# Objectif principal
+
+Du côté opposé, au midi et à l'est, le paysage offrait un tout autre tableau : par les fenêtres de la grand−salle on apercevait les maisons de Combourg, un étang, la chaussée de cet étang sur laquelle passait le grand chemin de Rennes, un moulin à eau, une prairie couverte de troupeaux de vaches et séparée de l'étang par la chaussée. Au bord de cette prairie s'allongeait un hameau dépendant d'un prieuré fondé en 1149 par Rivallon, seigneur de Combourg, et où l'on voyait sa statue mortuaire couchée sur le dos en armure de chevalier. Depuis l'étang, le terrain s'élevant par degrés, formait un amphithéâtre d'arbres, d'où sortaient des campaniles de villages et des tourelles de gentilhommières. Sur un dernier plan de l'horizon, entre l'occident et le midi, se profilaient les hauteurs de Bécherel. Une terrasse bordée de grands buis taillés circulait au pied du château de ce côté, passait derrière les écuries et allait, à divers replis, rejoindre le jardin des bains qui communiquait au grand Mail.
+
+# Objectifs secondaires
+
+### Objectif 1
+
+::: {.callout-note appearance="simple"}
+Étude épidémiologique descriptive
+:::
+
+### Objectif 2
+
+::: {.callout-note appearance="simple"}
+Étude épidémiologique descriptive
+:::
+
+### Objectif 3
+
+::: {.callout-note appearance="simple"}
+Étude épidémiologique descriptive
+:::
+
+### Objectif 4
+
+::: {.callout-note appearance="simple"}
+Étude épidémiologique descriptive
+:::
+
+### Objectif 5
+
+::: {.callout-note appearance="simple"}
+Étude épidémiologique descriptive
+:::
+
+# Technique
+
+L'analyse statistique sera réalisée avec le logiciel **R**[@rstat] & divers packages. Outre ceux cités dans le texte ou utilisera en particulier `tidyverse` [@tidy] & `baseph` [@baseph].
+
+Un dépôt GitHub sera utilisé qui ne comprendra que le code & non les données ou résultats. Au besoin un faux tableau de données sera présenté pour permettre des tests.
+
+<https://github.com/philippemichel/idaoh95/>
+
+
+:::

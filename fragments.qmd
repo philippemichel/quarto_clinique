@@ -1,12 +1,15 @@
 ---
 title: "Fragments"
 author: "Philippe MICHEL"
+lang: fr
+language: 
+  title-block-author-single: "Auteur"
 format: 
   html:
     highlight-style: ayu-light
 include-in-header:
    text: |
-eval: false
+eval: true
 echo: true
 ---
 
@@ -16,6 +19,9 @@ echo: true
 library(tidyverse)
 library(baseph)
 library(gtsummary)
+library(ggsci)
+#
+names(patients)[1] <- "sexe"
 ```
 
 # R
@@ -29,6 +35,11 @@ Mise en forme d'un graphique `ggplot2`.
 ```{r}
 #| label: graphique
 
+patients |> 
+  ggplot() +
+  aes(x = age, fill = lieudevie1) +
+  geom_histogram(binwidth = 10, position = "dodge") +
+
 # Snippet : stgraph
 
 labs(title = "",
@@ -38,7 +49,7 @@ labs(title = "",
     caption = "",
     fill = "") +
 theme_light() +
-colorspace::scale_fill_discrete_qualitative(palette = "Dark 3") +
+scale_fill_jama() +
 theme(
   plot.title = element_text(size = 14, face = "bold"),
   plot.subtitle = element_text(size = 12),
@@ -71,7 +82,7 @@ patients |>
 mutate(agerec = as.factor(agerec)) |>
 # Tracé du graphique
 age_pyramid(age_group = "agerec",
-            split_by = "sex",
+            split_by = "sexe",
             pal = c("pink", "lightblue"),
 show_midpoint = FALSE) +
 theme_light() +
@@ -95,6 +106,7 @@ theme_light() +
 
 ```{r}
 #| label: colonnes 
+#| eval: false
 
 # Colonnes pour une présentation (diapo)
 
@@ -110,4 +122,8 @@ Bla bla de droite
 
 ::::
 ```
+
+
+
+
 
