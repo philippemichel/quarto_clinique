@@ -1,5 +1,42 @@
 ---
+<<<<<<< HEAD
 subtitle: "Rapport Statistique - V 1.0"
+=======
+title: "Fausse étude de test"
+subtitle: "Rapport Statistique - V 1.0"
+lang: fr
+language:
+  title-block-author-single: "Auteur"
+author:
+  - name: "D<sup>r</sup> Philippe MICHEL"
+    orcid: "0000-0003-2392-7186"
+    email: "philippe.michel@ght-novo.fr"
+    role: "Statisticien"
+    affiliations:
+      name: "USRC - Hôpital NOVO"
+      city: Pontoise
+      department: "Unité de Soutien à la Recherche Clinique"
+
+title-block-banner: true
+format:
+  html:
+    appendix-style: default
+    embed-resources: false
+    theme: flatly
+    code-fold: true
+    html-math-method: katex
+    highlight-style: ayu
+    page-layout: full
+    toc: true
+    number-sections: true
+    smooth-scroll: true
+    citation-hover: true
+bibliography: stat.bib
+csl: jama.csl
+license: "MIT"
+warning: false
+message: false
+>>>>>>> a558ebf82acbc2dfdcd6a1e6a9a9477a16fec06f
 cache: false
 ---
 
@@ -82,6 +119,7 @@ L'échantillon comporte `r nrow(tt)` cas dont `r zz$n[1]` dans le groupe `avant`
 #| fig-cap: Données manquantes
 #| fig-asp: 0.8
 
+<<<<<<< HEAD
 gg <- vis_dat(tt)
 ggplotly(gg)
 ```
@@ -103,6 +141,9 @@ tt |>
   kbl() |> 
   kable_minimal()
 #   kable_material(c("striped", "hover"))
+=======
+vis_dat(tt)
+>>>>>>> a558ebf82acbc2dfdcd6a1e6a9a9477a16fec06f
 ```
 
 # Objectif principal
