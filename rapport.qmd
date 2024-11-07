@@ -1,0 +1,97 @@
+---
+subtitle: "Rapport statistique"
+
+---
+```{r}
+#| label: setup
+
+rm(list = ls())
+#
+library(baseph)
+library(janitor)
+library(tidyverse)
+library(gtsummary)
+library(kableExtra)
+library(lubridate)
+library(kableExtra)
+library(forestmodel)
+library(labelled)
+library(epiDisplay)
+library(visdat)
+library(GGally)
+library(ggridges)
+library(colorspace)
+library(xlsx)
+library(apyramid)
+library(plotly)
+#
+theme_gtsummary_language(language = "fr", decimal.mark = ",")
+options(OutDec = ",")
+#
+load("datas/xxx.RData")
+expx <- FALSE
+classeur <- "xxx.xls"
+if (expx){system(paste0("rm -f ",classeur))}
+#
+cat <- list(all_continuous() ~ "wilcox.test", all_categorical() ~ "chisq.test")
+affl <- list(all_categorical()~"{n}/{N} ({p})")
+```
+
+
+# Description de la population
+
+
+# Description de la population
+
+```{r}
+#| label: nb-cas
+
+ncas <- nrow(tt)
+zz <- tt |> 
+  group_by(groupe) |> 
+  count()
+```
+
+
+L'échantillon comporte `r nrow(tt)` cas  dont `r zz$n[1]` dans le groupe `avant` et `r zz$n[2]` dans le groupe `après`.
+
+## Données manquantes
+
+```{r}
+#| label: fig-manq
+#| fig-cap: Données manquantes
+#| fig-asp: 0.8
+
+vis_dat(tt)
+```
+
+## Objectif principal
+
+
+## Objectifs secondaires
+
+### Objectif 1
+
+
+### Objectif 2
+
+
+### Objectif 3
+
+### Objectif 4
+
+
+### Objectif 5
+
+
+# Technique 
+
+L'analyse statistique sera réalisée avec le logiciel **R**[@rstat] & divers packages. Outre ceux cités dans le texte ou utilisera en particulier `tidyverse` [@tidy] & `baseph` [@baseph].
+
+Un dépôt GitHub sera utilisé qui ne comprendra que le code & non les données ou résultats. Au besoin un faux tableau de données sera présenté pour permettre des tests.
+
+<https://github.com/philippemichel/idaoh95/>
+
+\printglossary[type=\glsxtrabbrvtype, title={Abbrévations}]
+
+\addcontentsline{toc}{chapter}{Bibliographie}
