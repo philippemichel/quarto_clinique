@@ -1,5 +1,6 @@
 title: "Fausse étude de test"
-subtitle: "Rapport Statistique - V 1.0"
+date: today
+date-format: "DD MMMM YYYY"
 lang: fr
 language:
   title-block-author-single: "Auteur"
@@ -13,13 +14,15 @@ author:
       city: Pontoise
       department: "Unité de Soutien à la Recherche Clinique"
 
-title-block-banner: true
+title-block-banner: "#26474a"
+title-block-banner-color: white
 format:
   html:
     appendix-style: default
     embed-resources: false
-    theme: flatly
+ #   theme: flatly
     code-fold: true
+    code-line-numbers: true
     html-math-method: katex
     highlight-style: ayu
     page-layout: full
@@ -29,7 +32,7 @@ format:
     citation-hover: true
 bibliography: stat.bib
 csl: jama.csl
-license: "MIT"
+license: "CC BY-SA"
 warning: false
 message: false
 cache: false

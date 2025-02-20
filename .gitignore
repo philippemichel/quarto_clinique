@@ -38,7 +38,10 @@ README_files*
 /.quarto/
 fragments_files
 #rapport_pdf.qmd#
+<<<<<<< HEAD
 rapport_html_files
 dasboard
 rapport_pdf_files
 *test*
+=======
+>>>>>>> a558ebf82acbc2dfdcd6a1e6a9a9477a16fec06f
