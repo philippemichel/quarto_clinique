@@ -1,26 +1,29 @@
-\newabbreviation{ph}{PH}{praticien hospitalier}
-\newabbreviation{ch}{CH}{centre hospitalier}
-\newabbreviation{naco}{NACO}{Nouveaux anticoagulants oraux}
-\newabbreviation{adl}{ADL}{Score ADL ( Activities of Daily Living) de \textsc{Katz}}
-\newabbreviation{reboa}{REBOA}{ballon d’occlusion intra-aortique}
-\newabbreviation{tsa}{TSA}{troncs supra-aortiques}
-\newabbreviation{nad}{NAD}{noradrénaline}
-\newabbreviation{smur}{SMUR}{structures mobiles d'urgence et de réanimation}
-\newabbreviation{samu}{SAMU}{service d’aide médicale urgente}
-\newabbreviation{pas}{PAS}{pression artérielle systolique}
-
+\newabbreviation{ph}{ph}{praticien hospitalier}
+\newabbreviation{ch}{ch}{centre hospitalier}
+\newabbreviation{naco}{naco}{Nouveaux anticoagulants oraux}
+\newabbreviation{adl}{adl}{Score ADL ( Activities of Daily Living) de \textsc{Katz}}
 %
-
-\newglossaryentry{alpha}{name={risque $\alpha$}, description={Probabilité de rejeter à tort l'hypothèse nulle càd conclure à une différence alors qu'il n'y en a pas.}, type = stat}
-
-\newglossaryentry{puissance}{name={puissance}, description={1-$\beta$, $\beta$ étant la probabilité de rejeter l'hypothèse nulle quand elle est fausse càd conclure à l'absence de différence alors qu'elle existe.}, type = stat}
-
-\newglossaryentry{lasso}{name={lasso}, description={\emph{Least Absolute Shrinkage and Selection Operator}. Méthode de régression linéaire pénalisée qui permet de sélectionner les variables les plus pertinentes.}, type = stat}
-
-\newglossaryentry{bootstrap}{name={bootstrap}, description={Méthodes d'inférence statistique basées sur la réplication multiple des données à partir du jeu de données étudié selon des techniques de rééchantillonnage.}, type = stat}
-
-\newglossaryentry{aic}{name={AIC}, description={Mesure (purement mathématique) de la qualité d'une régression.}, type = stat}
-
-\newglossaryentry{anova}{name={ANOVA}, description={Analyse de variance. Utilisée, entre autres, pour comparer plus de deux groupes.}, type = stat}
+\newabbreviation{anova}{\textsc{anova}}{analysis of variance}
+\newabbreviation{aic}{aic}{Akaike information criterion}
+\newabbreviation{icc}{icc}{Coefficient de Corrélation Intraclasse}
 
 
+
+
+\newglossaryentry{alpha}{name={Risque $\alpha$}, description={Probabilité de rejeter à tort l'hypothèse nulle càd conclure à une différence alors qu'il n'y en a pas.}}
+
+\newglossaryentry{puissance}{name={Puissance}, description={1-$\beta$, $\beta$ étant la probabilité de rejeter l'hypothèse nulle quand elle est fausse càd conclure à l'absence de différence alors qu'elle existe.}}
+
+\newglossaryentry{analyse post-hoc}{name={analyse post-hoc}, description={Un test post hoc ou test à postériori d’analyse de variance est un test utilisé après un test global (ANOVA par ex.) significatif. En effet, une ANOVA indique qu’il existe au moins un groupe qui diffère significativement des autres mais ne spécifie pas le quel. Les tests post hoc sont conçus pour comparer les groupes entre eux et indiquer quel groupe diffère de l’autre}}
+
+\newglossaryentry{kruskal}{name={\textsc{Kruskal-Wallis}}, description={Le test de Kruskal-Wallis , aussi appelé ANOVA unidirectionnelle sur rangs, est une méthode non paramétrique (pouvant donc être utilisé sur de petits échantillon sans faire d'hypothèse de normalité) utilisée pour tester s'il existe une différence entre deux ou plusieurs groupes indépendants.}}
+
+ \newglossaryentry{tukey}{name={\textsc{Tukey}}, description={Le test de Tukey permet d'effectuer une comparaison multiple en une seule étape en prenant en compte le risque d'erreur lié aux comparaisons multiples . Il est  souvent utilisé après une régression ,(ANOVA) ou autre test avec plus de deux niveaux dans le cadre d'un test post-hoc.}}
+
+ \newglossaryentry{fkappa}{name={\textsc{Fleiss-Kappa}}, description={Le score de Fleiss-Kappa mesure l’accord entre plus de deux observateurs lors d'un codage qualitatif en catégories. On retient souvent une limite à 0,6 pour un accord \emph{fort}}}
+
+ \newglossaryentry{wilcox}{name={Wilcoxon}, description={Le test de Wilcoxon-Mann-Whitney (ou test U de Mann-Whitney ou encore test de la somme des rangs de Wilcoxon) est un test statistique non paramétrique (pouvant donc être utilisé sur de petits échantillon sans faire d'hypothèse de normalité) qui permet de tester l'hypothèse selon laquelle les distributions de chacun de deux groupes de données sont proches.}}
+
+\newglossaryentry{spearman}{name={Spearman}, description={La corrélation de Spearman ou rho de Spearman et souvent notée par la lettre grecque ρ {\displaystyle \rho} (rho)  est une mesure de dépendance statistique non paramétrique entre deux variables. Elle est utilisée quand on ne veut pas faire l'hypothèse que la corrélation sera une droite.}}
+
+\newglossaryentry{fisher}{name={Fisher}, description={Le test exact de Fisher est un test statistique exact utilisé pour l'analyse des tables de contingence. Il est  proche du test du $\chi^2$.}}
