@@ -1,0 +1,127 @@
+---
+title: "intro"
+---
+
+Macros utiles dans tout projet Quarto : import des données, macros usuelles, thème pour ggplot.
+
+Commencer chaque page du site par : 
+
+{{< include intro.qmd >}}
+
+
+
+# SETUP
+
+libraries, import des données. 
+Mse en place de l'export vers .xlsx.
+Mise en forme des tableaux
+
+```{r}
+#| label: setup
+
+
+
+library(corrplot)
+library(baseph)
+library(ggsci)
+library(readODS)
+library(janitor)
+library(forestmodel)
+library(GGally)
+library(epiDisplay)
+library(plotly)
+library(emmeans)
+library(tidyverse)
+library(kableExtra)
+library(gtsummary)
+library(forestmodel)
+library(fmsb)
+library(labelled)
+#
+load("datas/medgachis.RData")
+
+classeur <- "medgachis.ods"
+expx <- FALSE
+if (expx) {
+  file.create(classeur)
+  file.remove(classeur)
+  write_ods(iris, classeur)
+}
+
+# sessionInfo()
+theme_gtsummary_language(language = "fr", decimal.mark = ",")
+theme_gtsummary_journal(journal = "jama")
+options(OutDec = ",")
+ptest <- list(all_continuous() ~ "t.test", all_categorical() ~ "chisq.test")
+ptest2 <- list(all_continuous() ~ "paired.t.test",
+               all_categorical() ~ "chisq.test")
+stt <- list(all_continuous() ~ "{mean} ({sd})",
+            all_categorical() ~ "{n}/{N} ({p}%)")
+```
+
+# Macros
+
+## Graphique de corrélations
+
+```{r}
+#| label: cor-prep
+
+corxp <- function(prof, titx) {
+  tit <- paste0("Corrélations ", titx)
+  prof |>
+    remove_constant() |>
+    mutate_if(is.factor, as.numeric) |>
+    dplyr::select(!formule_sys) |>
+    ggcorr(drop = TRUE, hjust = 0.9) +
+    labs(title = tit,
+         y = "n",
+         caption = "Corrélations. Validation interne du questionnaire.") +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(size = 14, face = "bold"),
+      plot.subtitle = element_text(size = 12),
+      axis.title.x = element_blank(),
+      legend.title = element_blank(),
+      axis.title.y = element_blank(),
+      ,
+      axis.text.x = element_text(size = 12),
+      axis.text.y = element_text(size = 12),
+      legend.position = "right"
+    )
+}
+```
+
+```{r}
+#| label: fig-corregul
+#| fig-cap: Corrélations internes
+#| eval; false
+ gg <-  patients |>
+corxp("Patients")
+ggplotly(gg)
+```
+
+# Thème ggplot
+
+
+```{r}
+#| themephm
+
+theme_phm <- function(base_size = 11, base_family = "", legend = "right") {
+  theme_light() %+replace%
+    theme(
+      plot.title = element_text(size = 14, face = "bold"),
+      plot.subtitle = element_text(size = 12),
+      axis.title.x = element_text(size = 12),
+      legend.title = element_text(size = 12),
+      axis.title.y = element_text(
+        size = 12,
+        angle = 90,
+        vjust = .5
+      ),
+      axis.text.x = element_text(size = 12),
+      axis.text.y = element_text(size = 12),
+      legend.position = legend
+    )
+}
+```
+

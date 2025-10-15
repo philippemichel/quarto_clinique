@@ -48,3 +48,4 @@ Il y a deux fichiers selon le type de documents à produire. Il faut juste chang
 
 **fragments.qmd** Un fichier pour y mettre des bouts de code ou de texte qu'on veut réutiliser. La plupart sont aussi dans mes snippets.
 
+**intro.qmd** Macros, thème ggplot2. À placer à la racine du site Quarto pour pouvoir être appelé par chaque page. 
